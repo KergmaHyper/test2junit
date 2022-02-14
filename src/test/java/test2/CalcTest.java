@@ -12,6 +12,11 @@ public class CalcTest {
     }
 
     @Test
+    public void testSub() {
+        assertEquals(3, Calc.sub(6, 3));
+    }
+
+    @Test
     public void testDivide() throws Exception {
         assertEquals(5, Calc.dvd(25, 5));
     }
