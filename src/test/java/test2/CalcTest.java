@@ -18,6 +18,6 @@ public class CalcTest {
 
     @Test(expected = ArithmeticException.class)
     public void testDivideBeZero() {
-        assertEquals(0, Calc.dvd(5, 0));
+        Calc.dvd(5, 0);
     }
 }
