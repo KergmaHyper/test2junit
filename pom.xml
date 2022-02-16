@@ -15,7 +15,7 @@
  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <selenium.version>4.0.0</selenium.version>
+   
 
   </properties>
 
@@ -27,13 +27,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
-      <scope>provided</scope>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+      <version>4.1.2</version>
     </dependency>
 
+  
   </dependencies>
   
   
@@ -102,13 +103,6 @@
     <dependencies>
 
       <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>30.1.1-jre</version>
-      </dependency>
-
-
-      <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-codec</artifactId>
         <version>4.1.43.Final</version>
@@ -122,17 +116,18 @@
       </dependency>
 
 
-      
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport</artifactId>
+        <version>4.1.60.Final</version>
+      </dependency>
 
 
       <dependency>
         <groupId>io.netty</groupId>
-        <artifactId>netty-handler</artifactId>
-        <version>4.1.43.Final</version>
+        <artifactId>netty-common</artifactId>
+        <version>4.1.60.Final</version>
       </dependency>
-
-
-      
 
 
       <dependency>
@@ -144,27 +139,17 @@
 
       <dependency>
         <groupId>io.netty</groupId>
-        <artifactId>netty-common</artifactId>
-        <version>4.1.67.Final</version>
-      </dependency>
-
-
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-buffer</artifactId>
-        <version>4.1.67.Final</version>
-      </dependency>
-
-
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-transport</artifactId>
-        <version>4.1.67.Final</version>
+        <artifactId>netty-handler</artifactId>
+        <version>4.1.43.Final</version>
       </dependency>
 
     
 
-      
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-buffer</artifactId>
+        <version>4.1.60.Final</version>
+      </dependency>
 
     </dependencies>
 
