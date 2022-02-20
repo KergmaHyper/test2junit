@@ -4,20 +4,13 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-
-import lombok.SneakyThrows;
-
 public class App {
     public static void main(String[] args) {
-        String text = "  Kilo@gmail.com.ua jjjkk@jjj kilo.gramm@gmail.net.stat.org   kom2@org.33";
-        Pattern pattern = Pattern.compile("[\\w\\d]+[\\.{1}[\\w\\d]+]{1,}@[\\w\\d]+\\.{1}[\\w\\d]+[\\.{1}[\\w\\d]+]*");
-        Matcher matcher = pattern.matcher(text);
+        // String text = " Kilo@gmail.com.ua jjjkk@jjj kilo.gramm@gmail.net.stat.org
+        // kom2@org.33";
+        // Pattern pattern =
+        // Pattern.compile("[\\w\\d]+[\\.{1}[\\w\\d]+]{1,}@[\\w\\d]+\\.{1}[\\w\\d]+[\\.{1}[\\w\\d]+]*");
+        // Matcher matcher = pattern.matcher(text);
         // System.out.println("\"".concat(text).concat("\""));
 
         // while (matcher.find()) {
@@ -25,13 +18,12 @@ public class App {
         // matcher.end(),
         // text.substring(matcher.start(), matcher.end()));
         // }
-        String text2 = "  !!! \t ??  ..  ,,  one two!!,three,";
-        System.out.println(text2);
-        Pattern patt2 = Pattern.compile("[!? ,.;:\\t]+");
+        // String text2 = " !!! \t ?? .. ,, one two!!,three,";
+        // System.out.println(text2);
+        // Pattern patt2 = Pattern.compile("[!? ,.;:\\t]+");
 
-        String[] arStr = patt2.split(text2.strip(), 0);
-        System.out.println(Arrays.toString(arStr));
-        text2.
+        // String[] arStr = patt2.split(text2.strip(), 0);
+        // System.out.println(Arrays.toString(arStr));
         // while (matcher.find()) {
         // System.out.printf("found - s:%d, e:%d, m:\"%s\"\n", matcher.start(),
         // matcher.end(),
@@ -80,5 +72,9 @@ public class App {
         // String str = driver1.getTitle();
         // System.out.printf("\n\n%str\n\n", str);
         // driver1.quit();
+        //
+        // Segment seg1 = new Segment(new Point(0, 0), new Point(0, 0));
+
     }
+
 }
