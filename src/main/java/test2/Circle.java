@@ -1,7 +1,5 @@
 package test2;
 
-import java.util.concurrent.atomic.DoubleAdder;
-
 public class Circle extends Figure {
     Point o;
     final double r;
