@@ -38,8 +38,8 @@ public class Triangle {
         }
 
         for (int i = 0; i < TOPS_COUNT; i++) {
-            edgeVectors[i] = new Point(edges[i][0].getX() - edges[i][1].getX(),
-                    edges[i][0].getY() - edges[i][1].getY());
+            edgeVectors[i] = new Point(edges[i][1].getX() - edges[i][0].getX(),
+                    edges[i][1].getY() - edges[i][0].getY());
         }
 
     }
@@ -58,12 +58,20 @@ public class Triangle {
     }
 
     public Point centroid() {
-        Point centr = null;
-        double X;
-        double Y;
-        // centr = new
 
-        return centr;
+        Segment saA = new Segment(tops[0], (new Segment(tops[1], tops[2])).midlePoint());
+        Segment sbB = new Segment(tops[1], (new Segment(tops[0], tops[2])).midlePoint());
+        Segment scC = new Segment(tops[2], (new Segment(tops[0], tops[1])).midlePoint());
+        Point center = saA.getPointCrossSegment(sbB);
+        if (center != null)
+            return center;
+        center = sbB.getPointCrossSegment(scC);
+        if (center != null)
+            return center;
+        center = scC.getPointCrossSegment(saA);
+        if (center != null)
+            return center;
+        return null;
     }
 
     @Override
@@ -73,12 +81,12 @@ public class Triangle {
     }
 
     public static void main(String[] args) {
-        Point A = new Point(-2, -1);
+        Point A = new Point(-1, 0);
         Point B = new Point(0, 2);
         Point C = new Point(1, 0);
 
         Triangle tr1 = new Triangle(A, B, C);
-        System.out.printf("Square triangle %s: %.1f", tr1, tr1.area());
+        System.out.printf("Square triangle %s: %.1f. Center triangle: %s\n", tr1, tr1.area(), tr1.centroid());
 
     }
 }
