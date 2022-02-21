@@ -14,6 +14,18 @@ public class TriangleNew extends Figure {
 
     }
 
+    public Point getA() {
+        return a;
+    }
+
+    public Point getB() {
+        return b;
+    }
+
+    public Point getC() {
+        return c;
+    }
+
     @Override
     public double area() {
 
@@ -40,6 +52,29 @@ public class TriangleNew extends Figure {
             answer = c;
 
         return new Point(answer.getX(), answer.getY());
+    }
+
+    @Override
+    public Point centroid() {
+
+        return (new Triangle(a, b, c)).centroid();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TriangleNew tr)
+            if (tr.getA().equals(a) && tr.getB().equals(b) && tr.getC().equals(c))
+                return true;
+        return false;
+    }
+
+    @Override
+    public boolean isTheSame(Figure figure) {
+        if (figure instanceof TriangleNew tr)
+            if (tr.equals(this) || tr.equals(new TriangleNew(b, c, a)) || tr.equals(new TriangleNew(c, a, b)))
+                return true;
+
+        return false;
     }
 
 }

@@ -21,6 +21,22 @@ public class Quadrilateral extends Figure {
         return (new Triangle(a, b, d)).area() + (new Triangle(b, c, d)).area();
     }
 
+    public Point getA() {
+        return a;
+    }
+
+    public Point getB() {
+        return b;
+    }
+
+    public Point getC() {
+        return c;
+    }
+
+    public Point getD() {
+        return d;
+    }
+
     @Override
     public String pointsToString() {
         return String.format("%s%s%s%s", a, b, c, d);
@@ -43,6 +59,31 @@ public class Quadrilateral extends Figure {
             answer = d;
 
         return new Point(answer.getX(), answer.getY());
+    }
+
+    @Override
+    public Point centroid() {
+
+        return (new Segment(a, c)).getPointCrossSegment(new Segment(b, d));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Quadrilateral q) {
+            if (q.getA().equals(a) && q.getB().equals(b) && q.getC().equals(c) && q.getD().equals(d))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isTheSame(Figure figure) {
+        if (figure instanceof Quadrilateral quadr) {
+            if (this.equals(quadr) || quadr.equals(new Quadrilateral(b, c, d, a))
+                    || quadr.equals(new Quadrilateral(c, d, a, b)) || quadr.equals(new Quadrilateral(d, a, b, c)))
+                return true;
+        }
+        return false;
     }
 
 }

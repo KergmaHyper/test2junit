@@ -9,4 +9,7 @@ public abstract class Figure {
 
     abstract public Point leftmostPoint();
 
+    abstract public Point centroid();
+
+    abstract public boolean isTheSame(Figure figure);
 }
