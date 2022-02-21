@@ -1,4 +1,4 @@
-import org.openqa.selenium.Point;
+package test2;
 
 public class Line {
     int k;
