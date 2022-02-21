@@ -54,5 +54,9 @@ public class App {
         // String str = driver1.getTitle();
         // System.out.printf("\n\n%str\n\n", str);
         // driver1.quit();
+        //
+        // Segment seg1 = new Segment(new Point(0, 0), new Point(0, 0));
+
     }
+
 }
