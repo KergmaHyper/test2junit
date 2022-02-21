@@ -1,4 +1,4 @@
-package test2;
+package test2.Figures;
 
 public abstract class Figure {
     abstract public double area();

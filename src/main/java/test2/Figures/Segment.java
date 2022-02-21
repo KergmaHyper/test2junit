@@ -1,4 +1,4 @@
-package test2;
+package test2.Figures;
 
 public class Segment {
     Point[] points = new Point[2];

@@ -1,4 +1,4 @@
-package test2;
+package test2.Figures;
 
 public class Quadrilateral extends Figure {
     Point a, b, c, d;

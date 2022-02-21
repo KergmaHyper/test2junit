@@ -1,4 +1,4 @@
-package test2;
+package test2.Figures;
 
 public class Triangle {
     final int TOPS_COUNT = 3;
