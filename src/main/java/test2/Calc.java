@@ -18,4 +18,7 @@ public class Calc {
         return x - y;
     }
 
+    public static void main(String[] args) {
+        System.out.println(Calc.add(2, 3));
+    }
 }
