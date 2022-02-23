@@ -9,12 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -24,11 +26,10 @@ import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.devtools.v85.indexeddb.model.Key;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ShopTest {
-    ChromeOptions chromeOptions;
-    ChromeDriver chromeDriver;
     WebDriver driver;
     String startUrl;
     String startTitle;
@@ -37,33 +38,28 @@ public class ShopTest {
     String currUrl;
     String psswd;
     String emlAddr;
+    String accCreateUrl;
+    String accCreateTitle;
 
     @BeforeAll
     public void setUp() {
-        // chromeOptions = new ChromeOptions();
-        // chromeDriver = new ChromeDriver(chromeOptions);
         driver = new ChromeDriver();
         startUrl = "http://automationpractice.com/index.php";
         startTitle = "My Store";
+
         loginUrl = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
         loginTitle = "Login - My Store";
+
+        accCreateUrl = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
+
         currUrl = "";
 
     }
 
     @AfterAll
     public void teardown() {
-        if (chromeDriver != null)
-            chromeDriver.quit();
         if (driver != null)
             driver.quit();
-    }
-
-    @Disabled
-    @Test
-    public void mainPageOpenChrome() {
-        chromeDriver.get(startUrl);
-        assertEquals(startTitle, chromeDriver.getTitle());
     }
 
     @Test
@@ -86,26 +82,88 @@ public class ShopTest {
 
     @Test
     public void inputAccountEmail() throws InterruptedException {
+        // * open login page
         driver.get(loginUrl);
-        WebElement webElement = driver.findElement(By.className("account_input"));
+        // * find imput area for email addr
+        // WebElement webElement = driver.findElement(By.className("account_input"));
+        String xpCreateEmail = "//input[contains(@class,'account_input')]";
+        WebElement webElement = driver.findElement(By.xpath(xpCreateEmail));
         assertFalse(webElement == null);
 
-        Date dtNow = new Date();
+        // * create random addr and passwd
         SimpleDateFormat dtF = new SimpleDateFormat("EddMMhhmm", Locale.US);
-        psswd = dtF.format(dtNow);
+        psswd = dtF.format(new Date());
         emlAddr = psswd.concat("@test.email");
 
-        webElement.sendKeys(emlAddr);
-        Thread.sleep(7000);
-        webElement = driver.findElement(By.id("SubmitCreate"));
-        assertFalse(webElement == null);
-        Thread.sleep(1000);
-        webElement.click();
+        // * input email addr in "input" and change focus for validate email addr
+        webElement.sendKeys(emlAddr, Keys.TAB);
+
+        // * find parent element - he contain class validate email addr
+        // * go to page input add data
+        WebElement submitButt = driver.findElement(By.id("SubmitCreate"));
+        assertFalse(submitButt == null);
+        submitButt.submit();
+        // * wait load page
         currUrl = driver.getCurrentUrl();
-        System.out.println(currUrl);
-        Thread.sleep(7000);
+        while (loginUrl.equals(currUrl)) {
+            currUrl = driver.getCurrentUrl();
+        }
+        assertEquals(accCreateUrl, currUrl);
+        assertEquals(emlAddr, driver.findElement(By.name("email")).getAttribute("value"));
+        System.out.println(driver.findElement(By.xpath("//input[contains(@name,'email')]")).getAttribute("value"));
+    }
+
+    @Test
+    public void createNewUser() throws InterruptedException {
+        driver.get(loginUrl);
+        WebElement emailNewInput = driver.findElement(By.className("account_input"));
+
+        // * create random addr and passwd
+        SimpleDateFormat dtF = new SimpleDateFormat("EddMMhhmm", Locale.US);
+        psswd = dtF.format(new Date());
+        emlAddr = psswd.concat("@test.email");
+
+        emailNewInput.sendKeys(emlAddr, Keys.TAB);
+        WebElement submitButt = driver.findElement(By.id("SubmitCreate"));
+        submitButt.submit();
+        // * wait load page
+        currUrl = driver.getCurrentUrl();
+        while (loginUrl.equals(currUrl)) {
+            currUrl = driver.getCurrentUrl();
+        }
+        // * check send params from prev page
+        assertEquals(emlAddr, driver.findElement(By.name("email")).getAttribute("value"));
+
+        // * filling fields to new user
+        String[][] userData = {
+                { "input", "id", "customer_firstname", "Vasia" }, // id="customer_firstname"
+                { "input", "id", "customer_lastname", "Pupkin" },
+                { "input", "id", "passwd", psswd },
+                { "input", "id", "firstname", "Vasia" },
+                { "input", "id", "lastname", "Pupkin" },
+                { "input", "id", "company", "Roga&Kopyta" },
+                { "input", "id", "address1", "Drugby str., 91100, 'Roga&Kopyta'" },
+                { "input", "id", "address2", "h.31, fl.5" },
+                { "input", "id", "city", "New York" },
+                { "input", "id", "postcode", "91100" },
+                { "textarea", "id", "other", "No information" },
+                { "input", "id", "phone", "+180645233771" },
+                { "input", "id", "phone_mobile", "+180505233771" },
+                { "input", "id", "alias", "Kyiv" }
+        };
+        driver.findElement(By.id("id_gender2")).click();
+        driver.findElement(By.id("id_gender1")).click();
+        driver.findElement(By.xpath("//select[@id='days']/option[@value='3']")).click();
+        driver.findElement(By.xpath("//select[@id='months']/option[@value='8']")).click();
+        driver.findElement(By.xpath("//select[@id='years']/option[@value='1980']")).click();
+        driver.findElement(By.xpath("//select[@id='id_state']/option[@value='24']")).click();
+        String xPath = "";
+        for (String[] userIter : userData) {
+            xPath = String.format("//%s[@%s='%s']", userIter[0], userIter[1], userIter[2]);
+            driver.findElement(By.xpath(xPath)).sendKeys(userIter[3], Keys.TAB);
+        }
+
+        Thread.sleep(10000);
     }
 
 }
-// http://automationpractice.com/index.php?controller=authentication&back=my-account
-// http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation
