@@ -2,17 +2,15 @@ package test2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.By;
@@ -20,13 +18,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-// import org.junit.After;
-// import org.junit.Before;
-// import org.junit.Test;
-
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.v85.indexeddb.model.Key;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ShopTest {
@@ -43,7 +36,21 @@ public class ShopTest {
 
     @BeforeAll
     public void setUp() {
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.logfile", "c:\\chromedriver.log");
+
+        System.setProperty("webdriver.chrome.verboseLogging", "true");
+        Map<String, Object> deviceMetrics = new HashMap<>();
+        deviceMetrics.put("width", 640);
+        deviceMetrics.put("height", 480);
+        deviceMetrics.put("pixelRatio", 3.0);
+        Map<String, Object> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceMetrics", deviceMetrics);
+        mobileEmulation.put("userAgent",
+                "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        driver = new ChromeDriver(chromeOptions);
+
         startUrl = "http://automationpractice.com/index.php";
         startTitle = "My Store";
 
@@ -62,23 +69,23 @@ public class ShopTest {
             driver.quit();
     }
 
-    @Test
-    public void mainPageOpenDriver() {
-        driver.get(startUrl);
-        assertEquals(startTitle, driver.getTitle());
-    }
+    // @Test
+    // public void mainPageOpenDriver() {
+    // driver.get(startUrl);
+    // assertEquals(startTitle, driver.getTitle());
+    // }
 
-    @Test
-    public void gotoLoginPage() {
-        driver.get(startUrl);
-        WebElement webElement = driver.findElement(By.className("login"));
-        assertFalse(webElement == null);
-        webElement.click();
-        currUrl = driver.getCurrentUrl();
-        assertEquals(loginUrl, currUrl);
-        assertEquals(loginTitle, driver.getTitle());
+    // @Test
+    // public void gotoLoginPage() {
+    // driver.get(startUrl);
+    // WebElement webElement = driver.findElement(By.className("login"));
+    // assertFalse(webElement == null);
+    // webElement.click();
+    // currUrl = driver.getCurrentUrl();
+    // assertEquals(loginUrl, currUrl);
+    // assertEquals(loginTitle, driver.getTitle());
 
-    }
+    // }
 
     @Test
     public void inputAccountEmail() throws InterruptedException {
@@ -128,9 +135,11 @@ public class ShopTest {
         submitButt.submit();
         // * wait load page
         currUrl = driver.getCurrentUrl();
+
         while (loginUrl.equals(currUrl)) {
             currUrl = driver.getCurrentUrl();
         }
+
         // * check send params from prev page
         assertEquals(emlAddr, driver.findElement(By.name("email")).getAttribute("value"));
 
@@ -163,7 +172,7 @@ public class ShopTest {
             driver.findElement(By.xpath(xPath)).sendKeys(userIter[3], Keys.TAB);
         }
 
-        Thread.sleep(10000);
+        Thread.sleep(5000);
     }
 
 }
