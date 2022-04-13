@@ -33,23 +33,11 @@ public class ShopTest {
     String emlAddr;
     String accCreateUrl;
     String accCreateTitle;
+    final String DATAFILE = "c:\\Projects\\test2junit\\src\\test\\java\\test2\\json\\testData.json";
 
     @BeforeAll
     public void setUp() {
-        System.setProperty("webdriver.chrome.logfile", "c:\\chromedriver.log");
-
-        System.setProperty("webdriver.chrome.verboseLogging", "true");
-        Map<String, Object> deviceMetrics = new HashMap<>();
-        deviceMetrics.put("width", 640);
-        deviceMetrics.put("height", 480);
-        deviceMetrics.put("pixelRatio", 3.0);
-        Map<String, Object> mobileEmulation = new HashMap<>();
-        mobileEmulation.put("deviceMetrics", deviceMetrics);
-        mobileEmulation.put("userAgent",
-                "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-        driver = new ChromeDriver(chromeOptions);
+        driver = new ChromeDriver();
 
         startUrl = "http://automationpractice.com/index.php";
         startTitle = "My Store";
